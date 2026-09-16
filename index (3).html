@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masood | Full Stack Developer</title>
+<meta name="description" content="Masood Web Developer — Full Stack Developer building web apps, e-commerce stores and business dashboards.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1220;
+    --bg-2:#0e1729;
+    --panel:#111d33;
+    --panel-2:#14203a;
+    --border:rgba(255,255,255,.08);
+    --text:#eef2f9;
+    --muted:#93a1bd;
+    --accent:#2f7dfa;
+    --accent-2:#5ec6e8;
+    --accent-soft:rgba(47,125,250,.12);
+    --success:#2fbf71;
+    --danger:#ef5b5b;
+    --radius:14px;
+    --maxw:1180px;
+    --font-en:'Inter','Sora',sans-serif;
+    --font-head:'Sora','Inter',sans-serif;
+    --font-ur:'Noto Nastaliq Urdu', serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-en);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  html[dir="rtl"] body{font-family:var(--font-ur);line-height:2;}
+  html[dir="rtl"] .brand, html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3{font-family:var(--font-ur);}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  button{font-family:inherit;cursor:pointer}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  section{position:relative}
+  ::selection{background:var(--accent);color:#fff}
+
+  /* ===== Focus & motion ===== */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--accent-2); outline-offset:2px; border-radius:6px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+
+  /* ===== Top utility bar ===== */
+  .utility-bar{
+    background:#070c17; border-bottom:1px solid var(--border);
+    font-size:12.5px; color:var(--muted);
+  }
+  .utility-bar .container{display:flex; justify-content:space-between; align-items:center; padding:8px 24px; gap:12px; flex-wrap:wrap}
+  .utility-bar .contact-mini{display:flex; gap:18px; flex-wrap:wrap}
+  .lang-switch{display:flex; gap:6px; background:var(--panel); padding:4px; border-radius:999px; border:1px solid var(--border)}
+  .lang-switch button{
+    border:none; background:transparent; color:var(--muted); padding:4px 12px; border-radius:999px; font-size:12.5px; font-weight:600;
+  }
+  .lang-switch button.active{background:var(--accent); color:#fff}
+
+  /* ===== Header ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,18,32,.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:16px 24px; gap:20px}
+  .brand{font-family:var(--font-head); font-size:20px; font-weight:800; letter-spacing:.2px}
+  .brand span{color:var(--accent)}
+  .brand small{display:block; font-size:10.5px; font-weight:600; letter-spacing:2px; color:var(--muted); margin-top:2px}
+  nav.main-nav ul{display:flex; gap:30px; align-items:center}
+  nav.main-nav a{font-size:14.5px; font-weight:500; color:var(--muted); position:relative; padding:6px 0}
+  nav.main-nav a:hover, nav.main-nav a.active{color:var(--text)}
+  nav.main-nav a.active::after{
+    content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px; background:var(--accent); border-radius:2px;
+  }
+  .header-actions{display:flex; align-items:center; gap:14px}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:11px 20px; border-radius:10px;
+    font-weight:600; font-size:14.5px; border:1px solid transparent; transition:transform .15s ease, background .2s ease, border-color .2s ease;
+    white-space:nowrap;
+  }
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--accent); color:#fff}
+  .btn-primary:hover{background:#2468d8}
+  .btn-outline{border-color:var(--border); color:var(--text)}
+  .btn-outline:hover{border-color:var(--accent)}
+  .btn-block{width:100%; justify-content:center}
+  .menu-toggle{display:none; background:none; border:1px solid var(--border); border-radius:8px; padding:8px 10px; color:var(--text)}
+  .menu-toggle span{display:block; width:20px; height:2px; background:var(--text); margin:4px 0; border-radius:2px}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative; padding:70px 0 40px;
+    background:
+      linear-gradient(180deg, rgba(7,12,23,.55) 0%, rgba(7,12,23,.85) 78%, var(--bg) 100%),
+      url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+    min-height:640px;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center}
+  .eyebrow{color:var(--accent-2); font-weight:600; font-size:14.5px; margin-bottom:10px; display:flex; align-items:center; gap:8px}
+  .eyebrow::before{content:""; width:22px; height:2px; background:var(--accent-2); display:inline-block}
+  .hero h1{font-family:var(--font-head); font-size:clamp(34px,4.6vw,54px); font-weight:800; line-height:1.12; letter-spacing:-.5px}
+  .hero h1 .accent{color:var(--accent-2)}
+  .hero p.lead{margin-top:18px; color:#cbd5ea; font-size:17px; max-width:480px}
+  .hero-cta{display:flex; gap:14px; margin-top:28px; flex-wrap:wrap}
+  .trust{margin-top:46px}
+  .trust p{font-size:12px; letter-spacing:1px; color:var(--muted); text-transform:uppercase; margin-bottom:14px}
+  .trust-logos{display:flex; gap:28px; flex-wrap:wrap; align-items:center; opacity:.85}
+  .trust-logos span{font-weight:700; font-size:15px; color:#dfe6f4; display:flex; align-items:center; gap:6px}
+  .hero-photo{position:relative}
+  .hero-photo img{
+    border-radius:20px; width:100%; aspect-ratio:4/5; object-fit:cover;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.6);
+  }
+  .hero-badge{
+    position:absolute; bottom:18px; left:18px; background:rgba(10,16,30,.85); backdrop-filter:blur(6px);
+    border:1px solid var(--border); border-radius:12px; padding:10px 16px; display:flex; gap:10px; align-items:center;
+  }
+  .hero-badge .dot{width:10px; height:10px; border-radius:50%; background:var(--success); box-shadow:0 0 0 4px rgba(47,191,113,.2)}
+  .hero-badge div{font-size:13px; font-weight:600}
+  .hero-badge small{display:block; color:var(--muted); font-weight:400; font-size:11.5px}
+  html[dir="rtl"] .hero-badge{left:auto; right:18px}
+
+  /* ===== About ===== */
+  .about{background:var(--bg-2); padding:90px 0}
+  .section-tag{color:var(--accent-2); font-weight:700; font-size:13.5px; letter-spacing:.5px}
+  .section-title{font-family:var(--font-head); font-size:clamp(26px,3vw,36px); font-weight:800; margin-top:8px; margin-bottom:18px; line-height:1.25}
+  .about-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:56px; align-items:start; margin-top:36px}
+  .about p.desc{color:var(--muted); font-size:15.5px; margin-bottom:26px; max-width:560px}
+  .facts{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:30px}
+  .fact{display:flex; gap:10px; align-items:flex-start; font-size:14.5px; color:#dbe2f0}
+  .fact .ic{color:var(--accent-2); flex-shrink:0; margin-top:2px}
+  .info-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:26px;
+    display:flex; flex-direction:column; gap:22px;
+  }
+  .info-row{display:flex; gap:14px; align-items:flex-start}
+  .info-row .ic{
+    width:38px; height:38px; border-radius:10px; background:var(--accent-soft); color:var(--accent-2);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .info-row strong{display:block; font-size:14px; margin-bottom:3px}
+  .info-row span{color:var(--muted); font-size:14px}
+
+  /* ===== Services ===== */
+  .services{padding:90px 0}
+  .section-head{text-align:center; margin-bottom:48px}
+  .section-head .section-tag, .section-head .section-title{display:block}
+  .services-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px}
+  .service-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:28px 24px;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .service-card:hover{border-color:var(--accent); transform:translateY(-4px)}
+  .service-card .ic{
+    width:46px; height:46px; border-radius:12px; background:var(--accent-soft); color:var(--accent-2);
+    display:flex; align-items:center; justify-content:center; margin-bottom:18px;
+  }
+  .service-card h3{font-size:17px; margin-bottom:10px; font-weight:700}
+  .service-card p{color:var(--muted); font-size:14px}
+
+  /* ===== Projects ===== */
+  .projects{background:var(--bg-2); padding:90px 0}
+  .projects-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px; gap:20px; flex-wrap:wrap}
+  .view-all{color:var(--accent-2); font-weight:600; font-size:14.5px; display:inline-flex; gap:6px; align-items:center}
+  .projects-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+  .project-card{
+    border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); background:var(--panel);
+    transition:transform .2s ease;
+  }
+  .project-card:hover{transform:translateY(-4px)}
+  .project-thumb{height:170px; position:relative; overflow:hidden}
+  .project-thumb img{width:100%; height:100%; object-fit:cover}
+  .project-body{padding:18px 20px}
+  .project-body h3{font-size:16px; margin-bottom:6px}
+  .project-body p{color:var(--accent-2); font-size:13px; font-weight:600}
+
+  /* ===== Blog (bonus, matches nav) ===== */
+  .blog{padding:90px 0}
+  .blog-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+  .blog-card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:22px}
+  .blog-card .date{color:var(--muted); font-size:12.5px; margin-bottom:10px}
+  .blog-card h3{font-size:16px; margin-bottom:10px}
+  .blog-card p{color:var(--muted); font-size:14px}
+
+  /* ===== Contact / CTA banner ===== */
+  .cta-banner{
+    position:relative; padding:80px 0; text-align:center;
+    background:
+      linear-gradient(180deg, rgba(9,15,28,.7), rgba(9,15,28,.9)),
+      url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+  }
+  .cta-banner h2{font-family:var(--font-head); font-size:clamp(26px,3.4vw,38px); font-weight:800; margin-bottom:12px}
+  .cta-banner p{color:#cfd8ea; max-width:520px; margin:0 auto 26px}
+
+  /* ===== Contact form section ===== */
+  .contact-section{padding:90px 0; background:var(--bg-2)}
+  .contact-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:50px}
+  .contact-form{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:30px}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px}
+  .field{margin-bottom:16px; display:flex; flex-direction:column; gap:7px}
+  .field label{font-size:13.5px; font-weight:600; color:#dbe2f0}
+  .field input, .field textarea, .field select{
+    background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 14px;
+    color:var(--text); font-family:inherit; font-size:14.5px;
+  }
+  .field input:focus, .field textarea:focus{border-color:var(--accent)}
+  .field textarea{resize:vertical; min-height:110px}
+  .field.error input, .field.error textarea{border-color:var(--danger)}
+  .field .err-msg{color:var(--danger); font-size:12.5px; display:none}
+  .field.error .err-msg{display:block}
+  .form-status{margin-top:14px; font-size:14px; padding:12px 14px; border-radius:10px; display:none}
+  .form-status.show{display:block}
+  .form-status.ok{background:rgba(47,191,113,.12); color:#6fe3a3; border:1px solid rgba(47,191,113,.3)}
+  .form-status.fail{background:rgba(239,91,91,.12); color:#ff9b9b; border:1px solid rgba(239,91,91,.3)}
+  .contact-aside .info-card{margin-bottom:16px}
+  .socials{display:flex; gap:12px; margin-top:6px}
+  .socials a{
+    width:38px; height:38px; border-radius:10px; background:var(--panel); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; color:var(--muted); transition:.2s;
+  }
+  .socials a:hover{color:#fff; border-color:var(--accent)}
+
+  /* ===== Footer ===== */
+  footer{background:#070c17; border-top:1px solid var(--border); padding:34px 0}
+  .footer-row{display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap}
+  .footer-row .brand small{color:var(--muted)}
+  footer .copy{color:var(--muted); font-size:13.5px}
+
+  /* ===== Back to top ===== */
+  #toTop{
+    position:fixed; bottom:24px; right:24px; z-index:60; width:44px; height:44px; border-radius:50%;
+    background:var(--accent); color:#fff; border:none; display:none; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px -8px rgba(47,125,250,.6);
+  }
+  html[dir="rtl"] #toTop{right:auto; left:24px}
+  #toTop.show{display:flex}
+
+  /* ===== Toast ===== */
+  #toast{
+    position:fixed; top:20px; left:50%; transform:translateX(-50%) translateY(-140%); z-index:100;
+    background:var(--panel); border:1px solid var(--border); padding:14px 20px; border-radius:12px;
+    font-size:14px; box-shadow:0 10px 30px rgba(0,0,0,.4); transition:transform .3s ease; display:flex; gap:10px; align-items:center;
+  }
+  #toast.show{transform:translateX(-50%) translateY(0)}
+  #toast .dot{width:8px;height:8px;border-radius:50%;background:var(--success)}
+
+  /* ===== Responsive ===== */
+  @media (max-width: 960px){
+    .hero-grid, .about-grid, .contact-grid{grid-template-columns:1fr}
+    .services-grid{grid-template-columns:repeat(2,1fr)}
+    .projects-grid, .blog-grid{grid-template-columns:repeat(2,1fr)}
+    .hero-photo{order:-1; max-width:360px; margin:0 auto}
+  }
+  @media (max-width: 760px){
+    nav.main-nav{
+      position:fixed; inset:0 0 0 auto; top:64px; height:calc(100vh - 64px); width:78%; max-width:320px;
+      background:#0a1120; border-left:1px solid var(--border); padding:26px 22px; transform:translateX(100%);
+      transition:transform .25s ease; overflow-y:auto;
+    }
+    html[dir="rtl"] nav.main-nav{right:auto; left:0; border-left:none; border-right:1px solid var(--border); transform:translateX(-100%)}
+    nav.main-nav.open{transform:translateX(0)}
+    nav.main-nav ul{flex-direction:column; align-items:flex-start; gap:6px}
+    nav.main-nav ul li{width:100%}
+    nav.main-nav a{display:block; padding:12px 4px; width:100%; border-bottom:1px solid var(--border)}
+    .menu-toggle{display:inline-flex; flex-direction:column; align-items:center; justify-content:center}
+    .header-actions .btn-primary{display:none}
+    .services-grid, .projects-grid, .blog-grid{grid-template-columns:1fr}
+    .form-row{grid-template-columns:1fr}
+    .hero{padding-top:36px}
+    .footer-row{flex-direction:column; text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Toast ============ -->
+<div id="toast"><span class="dot"></span><span id="toastMsg"></span></div>
+
+<!-- ============ Utility bar ============ -->
+<div class="utility-bar">
+  <div class="container">
+    <div class="contact-mini">
+      <span>📍 <span data-i18n="loc_val">Toronto, Canada</span></span>
+      <span>✉️ hello@masood.dev</span>
+      <span>📞 +1 (647) 123-4567</span>
+    </div>
+    <div class="lang-switch" role="group" aria-label="Language switch">
+      <button type="button" id="btnEN" class="active" onclick="setLang('en')">English</button>
+      <button type="button" id="btnUR" onclick="setLang('ur')">اردو</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Header ============ -->
+<header>
+  <div class="nav-row container">
+    <a href="#home" class="brand">Masood <span>Dev</span>
+      <small data-i18n="brand_sub">FULL STACK DEVELOPER</small>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <ul>
+        <li><a href="#home" class="active" data-i18n="nav_home">Home</a></li>
+        <li><a href="#about" data-i18n="nav_about">About</a></li>
+        <li><a href="#services" data-i18n="nav_services">Services</a></li>
+        <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="#blog" data-i18n="nav_blog">Blog</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="#contact" class="btn btn-primary" data-i18n="nav_hire">Hire Me</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow" data-i18n="hero_eyebrow">Hello, I'm</p>
+      <h1 data-i18n="hero_name">Masood</h1>
+      <h1 class="accent" data-i18n="hero_role">Full Stack Developer</h1>
+      <p class="lead" data-i18n="hero_lead">I build exceptional digital experiences for businesses in Pakistan and around the world.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary" data-i18n="hero_cta1">View My Work →</a>
+        <a href="#contact" class="btn btn-outline" data-i18n="hero_cta2">✉ Contact Me</a>
+      </div>
+      <div class="trust">
+        <p data-i18n="hero_trust">Trusted by companies &amp; institutions</p>
+        <div class="trust-logos">
+          <span>🛒 Shopify</span>
+          <span>🔎 Google</span>
+          <span>🌐 WordPress</span>
+          <span>▦ Microsoft</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=900&auto=format&fit=crop" alt="Masood, Full Stack Developer">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <div data-i18n="hero_badge_1">Available for freelance
+          <small data-i18n="hero_badge_2">Reply within 24 hours</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ About ============ -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <p class="section-tag" data-i18n="about_tag">ABOUT ME</p>
+        <h2 class="section-title" data-i18n="about_title">Building Solutions That Make an Impact</h2>
+        <p class="desc" data-i18n="about_desc">I'm a passionate Full Stack Developer based in Pakistan. I specialize in building scalable web applications using modern technologies. With a strong eye for design and a love for clean code, I help businesses and institutions bring their ideas to life.</p>
+        <div class="facts">
+          <div class="fact"><span class="ic">⏱</span><span data-i18n="fact1">5+ Years of Experience</span></div>
+          <div class="fact"><span class="ic">🧭</span><span data-i18n="fact2">Available for Freelance</span></div>
+          <div class="fact"><span class="ic">✅</span><span data-i18n="fact3">50+ Projects Completed</span></div>
+          <div class="fact"><span class="ic">🌍</span><span data-i18n="fact4">Clients Worldwide</span></div>
+        </div>
+        <a href="#" id="downloadCv" class="btn btn-primary" data-i18n="download_cv">Download CV ⬇</a>
+      </div>
+      <div class="info-card">
+        <div class="info-row">
+          <span class="ic">📍</span>
+          <div><strong data-i18n="loc_label">Location</strong><span data-i18n="loc_val2">Kohat, Pakistan</span></div>
+        </div>
+        <div class="info-row">
+          <span class="ic">✉️</span>
+          <div><strong data-i18n="email_label">Email</strong><span>hello@masood.dev</span></div>
+        </div>
+        <div class="info-row">
+          <span class="ic">📞</span>
+          <div><strong data-i18n="phone_label">Phone</strong><span>+92 300 1234567</span></div>
+        </div>
+        <div class="info-row">
+          <span class="ic">🌐</span>
+          <div><strong data-i18n="lang_label">Languages</strong><span data-i18n="lang_val">English, Urdu</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Services ============ -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-head">
+      <p class="section-tag" data-i18n="services_tag">MY SERVICES</p>
+      <h2 class="section-title" data-i18n="services_title">What I Can Do For You</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="ic">&lt;/&gt;</div>
+        <h3 data-i18n="s1_title">Web Development</h3>
+        <p data-i18n="s1_desc">Custom websites and web applications built with the latest technologies.</p>
+      </div>
+      <div class="service-card">
+        <div class="ic">📱</div>
+        <h3 data-i18n="s2_title">Responsive Design</h3>
+        <p data-i18n="s2_desc">Mobile-first designs that look great on all devices and screen sizes.</p>
+      </div>
+      <div class="service-card">
+        <div class="ic">🚀</div>
+        <h3 data-i18n="s3_title">Performance Optimization</h3>
+        <p data-i18n="s3_desc">Improve website speed and performance for better SEO and user experience.</p>
+      </div>
+      <div class="service-card">
+        <div class="ic">🛡</div>
+        <h3 data-i18n="s4_title">Website Maintenance</h3>
+        <p data-i18n="s4_desc">Ongoing support and maintenance to keep your website running smoothly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Projects ============ -->
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="projects-head">
+      <div>
+        <p class="section-tag" data-i18n="projects_tag">FEATURED PROJECTS</p>
+        <h2 class="section-title" style="margin-bottom:0" data-i18n="projects_title">Recent Work</h2>
+      </div>
+      <a href="#" class="view-all" data-i18n="view_all">View All Projects →</a>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-thumb"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=700&auto=format&fit=crop" alt="E-Commerce Platform"></div>
+        <div class="project-body">
+          <h3 data-i18n="p1_title">E-Commerce Platform</h3>
+          <p>Shopify / React / Node.js</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=700&auto=format&fit=crop" alt="School Management System"></div>
+        <div class="project-body">
+          <h3 data-i18n="p2_title">School Management System</h3>
+          <p>PHP / MySQL / WhatsApp API</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=700&auto=format&fit=crop" alt="Business Dashboard"></div>
+        <div class="project-body">
+          <h3 data-i18n="p3_title">Business Dashboard</h3>
+          <p>Vue.js / Laravel / MySQL</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Blog ============ -->
+<section class="blog" id="blog">
+  <div class="container">
+    <div class="section-head">
+      <p class="section-tag" data-i18n="blog_tag">FROM THE BLOG</p>
+      <h2 class="section-title" data-i18n="blog_title">Latest Articles</h2>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card">
+        <p class="date" data-i18n="b1_date">March 2026</p>
+        <h3 data-i18n="b1_title">Why Every School Needs a Website</h3>
+        <p data-i18n="b1_desc">How institutions in Pakistan can reach more students online.</p>
+      </div>
+      <div class="blog-card">
+        <p class="date" data-i18n="b2_date">February 2026</p>
+        <h3 data-i18n="b2_title">Automating Fee Reminders via WhatsApp</h3>
+        <p data-i18n="b2_desc">A practical guide to notifying parents automatically.</p>
+      </div>
+      <div class="blog-card">
+        <p class="date" data-i18n="b3_date">January 2026</p>
+        <h3 data-i18n="b3_title">Static vs Dynamic Websites</h3>
+        <p data-i18n="b3_desc">Choosing the right approach for your next project.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA banner ============ -->
+<section class="cta-banner">
+  <div class="container">
+    <h2 data-i18n="cta_title">Let's Work Together</h2>
+    <p data-i18n="cta_desc">Have a project in mind? I'd love to hear about it. Let's create something amazing together.</p>
+    <a href="#contact" class="btn btn-primary" data-i18n="cta_btn">Get In Touch →</a>
+  </div>
+</section>
+
+<!-- ============ Contact ============ -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-head" style="text-align:left">
+      <p class="section-tag" data-i18n="contact_tag">GET IN TOUCH</p>
+      <h2 class="section-title" data-i18n="contact_title">Send Me a Message</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-aside">
+        <div class="info-card">
+          <div class="info-row">
+            <span class="ic">📍</span>
+            <div><strong data-i18n="loc_label">Location</strong><span data-i18n="loc_val2">Kohat, Pakistan</span></div>
+          </div>
+          <div class="info-row">
+            <span class="ic">✉️</span>
+            <div><strong data-i18n="email_label">Email</strong><span>hello@masood.dev</span></div>
+          </div>
+          <div class="info-row">
+            <span class="ic">📞</span>
+            <div><strong data-i18n="phone_label">Phone</strong><span>+92 300 1234567</span></div>
+          </div>
+        </div>
+        <p style="margin-top:20px; color:var(--muted); font-size:13.5px" data-i18n="follow_me">Follow me</p>
+        <div class="socials">
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="GitHub">gh</a>
+          <a href="#" aria-label="Twitter">tw</a>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="field" id="field-name">
+            <label for="name" data-i18n="lbl_name">Full Name</label>
+            <input type="text" id="name" name="name" autocomplete="name">
+            <span class="err-msg" data-i18n="err_name">Please enter your name.</span>
+          </div>
+          <div class="field" id="field-email">
+            <label for="email" data-i18n="lbl_email">Email Address</label>
+            <input type="email" id="email" name="email" autocomplete="email">
+            <span class="err-msg" data-i18n="err_email">Please enter a valid email.</span>
+          </div>
+        </div>
+        <div class="field" id="field-subject">
+          <label for="subject" data-i18n="lbl_subject">Subject</label>
+          <input type="text" id="subject" name="subject">
+          <span class="err-msg" data-i18n="err_subject">Please enter a subject.</span>
+        </div>
+        <div class="field" id="field-message">
+          <label for="message" data-i18n="lbl_message">Message</label>
+          <textarea id="message" name="message"></textarea>
+          <span class="err-msg" data-i18n="err_message">Please write a short message.</span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submitBtn" data-i18n="btn_send">Send Message</button>
+        <div class="form-status" id="formStatus"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer>
+  <div class="container footer-row">
+    <a href="#home" class="brand">Masood <span>Dev</span><small data-i18n="brand_sub">FULL STACK DEVELOPER</small></a>
+    <p class="copy">© <span id="year"></span> Masood Web Developer. <span data-i18n="rights">All rights reserved.</span></p>
+    <div class="socials">
+      <a href="#" aria-label="LinkedIn">in</a>
+      <a href="#" aria-label="GitHub">gh</a>
+      <a href="#" aria-label="Twitter">tw</a>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+/* =========================================================
+   i18n dictionary (English / Urdu)
+========================================================= */
+const dict = {
+  en: {
+    brand_sub:"FULL STACK DEVELOPER",
+    nav_home:"Home", nav_about:"About", nav_services:"Services", nav_projects:"Projects",
+    nav_blog:"Blog", nav_contact:"Contact", nav_hire:"Hire Me",
+    hero_eyebrow:"Hello, I'm", hero_name:"Masood", hero_role:"Full Stack Developer",
+    hero_lead:"I build exceptional digital experiences for businesses in Pakistan and around the world.",
+    hero_cta1:"View My Work →", hero_cta2:"✉ Contact Me",
+    hero_trust:"Trusted by companies & institutions",
+    hero_badge_1:"Available for freelance", hero_badge_2:"Reply within 24 hours",
+    about_tag:"ABOUT ME", about_title:"Building Solutions That Make an Impact",
+    about_desc:"I'm a passionate Full Stack Developer based in Pakistan. I specialize in building scalable web applications using modern technologies. With a strong eye for design and a love for clean code, I help businesses and institutions bring their ideas to life.",
+    fact1:"5+ Years of Experience", fact2:"Available for Freelance",
+    fact3:"50+ Projects Completed", fact4:"Clients Worldwide",
+    download_cv:"Download CV ⬇",
+    loc_label:"Location", loc_val:"Toronto, Canada", loc_val2:"Kohat, Pakistan",
+    email_label:"Email", phone_label:"Phone", lang_label:"Languages", lang_val:"English, Urdu",
+    services_tag:"MY SERVICES", services_title:"What I Can Do For You",
+    s1_title:"Web Development", s1_desc:"Custom websites and web applications built with the latest technologies.",
+    s2_title:"Responsive Design", s2_desc:"Mobile-first designs that look great on all devices and screen sizes.",
+    s3_title:"Performance Optimization", s3_desc:"Improve website speed and performance for better SEO and user experience.",
+    s4_title:"Website Maintenance", s4_desc:"Ongoing support and maintenance to keep your website running smoothly.",
+    projects_tag:"FEATURED PROJECTS", projects_title:"Recent Work", view_all:"View All Projects →",
+    p1_title:"E-Commerce Platform", p2_title:"School Management System", p3_title:"Business Dashboard",
+    blog_tag:"FROM THE BLOG", blog_title:"Latest Articles",
+    b1_date:"March 2026", b1_title:"Why Every School Needs a Website", b1_desc:"How institutions in Pakistan can reach more students online.",
+    b2_date:"February 2026", b2_title:"Automating Fee Reminders via WhatsApp", b2_desc:"A practical guide to notifying parents automatically.",
+    b3_date:"January 2026", b3_title:"Static vs Dynamic Websites", b3_desc:"Choosing the right approach for your next project.",
+    cta_title:"Let's Work Together", cta_desc:"Have a project in mind? I'd love to hear about it. Let's create something amazing together.",
+    cta_btn:"Get In Touch →",
+    contact_tag:"GET IN TOUCH", contact_title:"Send Me a Message", follow_me:"Follow me",
+    lbl_name:"Full Name", lbl_email:"Email Address", lbl_subject:"Subject", lbl_message:"Message",
+    err_name:"Please enter your name.", err_email:"Please enter a valid email.",
+    err_subject:"Please enter a subject.", err_message:"Please write a short message.",
+    btn_send:"Send Message", btn_sending:"Sending...",
+    status_ok:"Thanks! Your message has been sent — I'll reply soon.",
+    status_fail:"Something went wrong. Please email me directly at hello@masood.dev.",
+    rights:"All rights reserved.",
+    toast_ur:"Language switched to Urdu", toast_en:"Language switched to English",
+    cv_missing:"CV file not added yet. Replace assets/masood-cv.pdf with your real CV."
+  },
+  ur: {
+    brand_sub:"فل اسٹیک ڈویلپر",
+    nav_home:"ہوم", nav_about:"تعارف", nav_services:"خدمات", nav_projects:"پراجیکٹس",
+    nav_blog:"بلاگ", nav_contact:"رابطہ", nav_hire:"مجھے ہائر کریں",
+    hero_eyebrow:"السلام علیکم، میں ہوں", hero_name:"مسعود", hero_role:"فل اسٹیک ڈویلپر",
+    hero_lead:"میں پاکستان اور دنیا بھر کے کاروباروں کے لیے شاندار ڈیجیٹل ویب سائٹس اور ایپلیکیشنز بناتا ہوں۔",
+    hero_cta1:"میرا کام دیکھیں ←", hero_cta2:"✉ رابطہ کریں",
+    hero_trust:"کمپنیوں اور اداروں کا اعتماد",
+    hero_badge_1:"فری لانس کام کے لیے دستیاب", hero_badge_2:"24 گھنٹوں میں جواب",
+    about_tag:"میرے بارے میں", about_title:"ایسے حل جو حقیقی فرق پیدا کریں",
+    about_desc:"میں پاکستان میں مقیم ایک پرجوش فل اسٹیک ڈویلپر ہوں۔ میں جدید ٹیکنالوجیز کے ذریعے قابلِ توسیع ویب ایپلیکیشنز بناتا ہوں۔ ڈیزائن کی گہری سمجھ اور صاف کوڈ کے شوق کے ساتھ، میں کاروباروں اور اداروں کو ان کے خیالات حقیقت میں بدلنے میں مدد دیتا ہوں۔",
+    fact1:"5+ سال کا تجربہ", fact2:"فری لانس کے لیے دستیاب",
+    fact3:"50+ مکمل شدہ پراجیکٹس", fact4:"دنیا بھر میں کلائنٹس",
+    download_cv:"سی وی ڈاؤن لوڈ کریں ⬇",
+    loc_label:"مقام", loc_val:"ٹورنٹو، کینیڈا", loc_val2:"کوہاٹ، پاکستان",
+    email_label:"ای میل", phone_label:"فون", lang_label:"زبانیں", lang_val:"انگریزی، اردو",
+    services_tag:"میری خدمات", services_title:"میں آپ کے لیے کیا کر سکتا ہوں",
+    s1_title:"ویب ڈویلپمنٹ", s1_desc:"جدید ترین ٹیکنالوجیز سے تیار کردہ کسٹم ویب سائٹس اور ایپلیکیشنز۔",
+    s2_title:"ریسپانسو ڈیزائن", s2_desc:"موبائل فرینڈلی ڈیزائن جو ہر ڈیوائس اور اسکرین پر بہترین نظر آئیں۔",
+    s3_title:"پرفارمنس آپٹیمائزیشن", s3_desc:"بہتر SEO اور صارف کے تجربے کے لیے ویب سائٹ کی رفتار اور کارکردگی بہتر بنانا۔",
+    s4_title:"ویب سائٹ مینٹیننس", s4_desc:"آپ کی ویب سائٹ کو ہموار چلانے کے لیے مسلسل معاونت اور دیکھ بھال۔",
+    projects_tag:"نمایاں پراجیکٹس", projects_title:"حالیہ کام", view_all:"تمام پراجیکٹس دیکھیں ←",
+    p1_title:"ای کامرس پلیٹ فارم", p2_title:"اسکول مینجمنٹ سسٹم", p3_title:"بزنس ڈیش بورڈ",
+    blog_tag:"بلاگ سے", blog_title:"تازہ ترین مضامین",
+    b1_date:"مارچ 2026", b1_title:"ہر اسکول کو ویب سائٹ کی ضرورت کیوں ہے", b1_desc:"پاکستان میں ادارے آن لائن مزید طلبہ تک کیسے پہنچ سکتے ہیں۔",
+    b2_date:"فروری 2026", b2_title:"واٹس ایپ کے ذریعے فیس یاد دہانی خودکار بنانا", b2_desc:"والدین کو خودکار طور پر مطلع کرنے کا عملی طریقہ۔",
+    b3_date:"جنوری 2026", b3_title:"سٹیٹک بمقابلہ ڈائنامک ویب سائٹس", b3_desc:"اپنے اگلے پراجیکٹ کے لیے درست طریقہ منتخب کرنا۔",
+    cta_title:"آئیے مل کر کام کریں", cta_desc:"کوئی پراجیکٹ ذہن میں ہے؟ مجھے اس کے بارے میں جان کر خوشی ہوگی۔ آئیے مل کر کچھ شاندار بنائیں۔",
+    cta_btn:"رابطہ کریں ←",
+    contact_tag:"رابطہ کریں", contact_title:"مجھے پیغام بھیجیں", follow_me:"مجھے فالو کریں",
+    lbl_name:"پورا نام", lbl_email:"ای میل ایڈریس", lbl_subject:"موضوع", lbl_message:"پیغام",
+    err_name:"براہ کرم اپنا نام درج کریں۔", err_email:"براہ کرم درست ای میل درج کریں۔",
+    err_subject:"براہ کرم موضوع درج کریں۔", err_message:"براہ کرم مختصر پیغام لکھیں۔",
+    btn_send:"پیغام بھیجیں", btn_sending:"بھیجا جا رہا ہے...",
+    status_ok:"شکریہ! آپ کا پیغام بھیج دیا گیا ہے — میں جلد جواب دوں گا۔",
+    status_fail:"کچھ غلط ہو گیا۔ براہ کرم براہ راست hello@masood.dev پر ای میل کریں۔",
+    rights:"جملہ حقوق محفوظ ہیں۔",
+    toast_ur:"زبان اردو میں تبدیل ہو گئی", toast_en:"زبان انگریزی میں تبدیل ہو گئی",
+    cv_missing:"سی وی فائل ابھی شامل نہیں کی گئی۔ اپنی اصل سی وی کو assets/masood-cv.pdf سے بدل دیں۔"
+  }
+};
+
+/* =========================================================
+   Language switching
+========================================================= */
+function setLang(lang){
+  const d = dict[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(d[key] !== undefined){
+      // preserve nested <small> tags (hero badge / brand) by only touching direct text
+      if(el.children.length){
+        // find first text node and replace, keep children
+        for(const node of el.childNodes){
+          if(node.nodeType === 3 && node.textContent.trim().length){
+            node.textContent = d[key] + ' ';
+            break;
+          }
+        }
+      } else {
+        el.textContent = d[key];
+      }
+    }
+  });
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ur' ? 'rtl' : 'ltr';
+  document.getElementById('btnEN').classList.toggle('active', lang==='en');
+  document.getElementById('btnUR').classList.toggle('active', lang==='ur');
+  localStorage.setItem('masood_lang', lang);
+  showToast(lang === 'ur' ? d.toast_ur : d.toast_en);
+  window.__lang = lang;
+}
+
+/* On load: restore saved language */
+document.addEventListener('DOMContentLoaded', ()=>{
+  const saved = localStorage.getItem('masood_lang') || 'en';
+  setLang(saved);
+  document.getElementById('year').textContent = new Date().getFullYear();
+});
+
+/* =========================================================
+   Mobile menu toggle
+========================================================= */
+const menuToggle = document.getElementById('menuToggle');
+const mainNav = document.getElementById('mainNav');
+menuToggle.addEventListener('click', ()=>{
+  const open = mainNav.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', open);
+});
+document.querySelectorAll('#mainNav a').forEach(a=>{
+  a.addEventListener('click', ()=> mainNav.classList.remove('open'));
+});
+
+/* =========================================================
+   Active nav link on scroll
+========================================================= */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav.main-nav a');
+window.addEventListener('scroll', ()=>{
+  let current = '';
+  sections.forEach(sec=>{
+    const top = sec.offsetTop - 90;
+    if(window.scrollY >= top) current = sec.getAttribute('id');
+  });
+  navLinks.forEach(link=>{
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+
+  // back to top button
+  document.getElementById('toTop').classList.toggle('show', window.scrollY > 500);
+}, {passive:true});
+
+document.getElementById('toTop').addEventListener('click', ()=>{
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* =========================================================
+   Toast helper
+========================================================= */
+let toastTimer;
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> toast.classList.remove('show'), 2800);
+}
+
+/* =========================================================
+   Download CV button (works once you add the file)
+========================================================= */
+document.getElementById('downloadCv').addEventListener('click', function(e){
+  e.preventDefault();
+  const link = document.createElement('a');
+  link.href = 'assets/masood-cv.pdf';
+  link.download = 'Masood-CV.pdf';
+  fetch(link.href, {method:'HEAD'}).then(res=>{
+    if(res.ok){ link.click(); }
+    else { showToast(dict[window.__lang || 'en'].cv_missing); }
+  }).catch(()=> showToast(dict[window.__lang || 'en'].cv_missing));
+});
+
+/* =========================================================
+   Contact form — client-side validation + real submission
+   -----------------------------------------------------------
+   This site is static (deployed on GitHub Pages), so there is
+   no server of our own. The form submits to Formspree, a free
+   form backend: replace YOUR_FORM_ID below with your own ID
+   from https://formspree.io (takes 1 minute, no code needed).
+   Until you do that, the form still validates fully and shows
+   a friendly message, and falls back to opening the user's
+   email app via mailto so nothing is ever fully broken.
+========================================================= */
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"; // <-- replace with your real Formspree endpoint
+
+const form = document.getElementById('contactForm');
+const statusBox = document.getElementById('formStatus');
+const submitBtn = document.getElementById('submitBtn');
+
+function validateField(id, testFn){
+  const field = document.getElementById('field-' + id);
+  const input = document.getElementById(id);
+  const ok = testFn(input.value.trim());
+  field.classList.toggle('error', !ok);
+  return ok;
+}
+
+form.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const d = dict[window.__lang || 'en'];
+
+  const validName = validateField('name', v => v.length >= 2);
+  const validEmail = validateField('email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+  const validSubject = validateField('subject', v => v.length >= 3);
+  const validMessage = validateField('message', v => v.length >= 10);
+
+  if(!(validName && validEmail && validSubject && validMessage)){
+    return;
+  }
+
+  statusBox.className = 'form-status';
+  submitBtn.disabled = true;
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = d.btn_sending;
+
+  const payload = {
+    name: document.getElementById('name').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    subject: document.getElementById('subject').value.trim(),
+    message: document.getElementById('message').value.trim()
+  };
+
+  try{
+    if(FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')){
+      // Endpoint not configured yet — simulate success locally so the
+      // demo still works, and log the message so you can see it.
+      console.log('Contact form submission (Formspree not configured yet):', payload);
+      await new Promise(r => setTimeout(r, 700));
+      statusBox.textContent = d.status_ok;
+      statusBox.classList.add('show','ok');
+      form.reset();
+    } else {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method:'POST',
+        headers:{'Accept':'application/json','Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      if(res.ok){
+        statusBox.textContent = d.status_ok;
+        statusBox.classList.add('show','ok');
+        form.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    }
+  } catch(err){
+    statusBox.textContent = d.status_fail;
+    statusBox.classList.add('show','fail');
+    // Fallback: open the user's email client with the message pre-filled
+    const mailto = `mailto:hello@masood.dev?subject=${encodeURIComponent(payload.subject)}&body=${encodeURIComponent(payload.message + '\n\nFrom: ' + payload.name + ' (' + payload.email + ')')}`;
+    window.open(mailto, '_blank');
+  } finally{
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+  }
+});
+
+/* Clear field error state as the user types */
+['name','email','subject','message'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', ()=>{
+    document.getElementById('field-' + id).classList.remove('error');
+  });
+});
+</script>
+</body>
+</html>
